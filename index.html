@@ -1,117 +1,181 @@
 <!doctype html>
 <html lang="fr">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="theme-color" content="#111827" />
-  <meta name="description" content="Générateur de factures YES LINK SARLAU" />
-  <title>Facture YES LINK</title>
-  <link rel="manifest" href="manifest.json" />
-  <link rel="icon" href="icon.svg" type="image/svg+xml" />
-  <link rel="stylesheet" href="styles.css" />
-</head>
-<body>
-  <div class="app-shell">
-    <header class="toolbar no-print">
-      <div>
-        <h1>Générateur de factures</h1>
-        <p>YES LINK SARLAU</p>
-      </div>
-      <div class="toolbar-actions">
-        <button id="newInvoiceBtn" class="btn btn-secondary" type="button">Nouvelle facture</button>
-        <button id="addRowBtn" class="btn btn-secondary" type="button">Ajouter une ligne</button>
-        <button id="printBtn" class="btn btn-primary" type="button">Télécharger / Imprimer PDF</button>
-      </div>
-    </header>
-
-    <main id="invoice" class="invoice-page" aria-label="Facture">
-      <section class="company-header">
-        <div class="logo-text">YES LINK SARLAU</div>
-        <div class="document-label">Facture</div>
-      </section>
-
-      <section class="invoice-meta">
-        <div class="meta-card">
-          <label>
-            <span>NUMÉRO :</span>
-            <input id="invoiceNumber" type="text" placeholder="Ex. FAC-2026-001" autocomplete="off" />
-          </label>
-          <label>
-            <span>DATE :</span>
-            <input id="invoiceDate" type="date" />
-          </label>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#111827" />
+    <meta name="description" content="Générateur de factures YES LINK SARLAU" />
+    <title>Facture YES LINK</title>
+    <link rel="manifest" href="manifest.json" />
+    <link rel="icon" href="icon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="toolbar no-print">
+        <div>
+          <h1>Générateur de factures</h1>
+          <p>YES LINK SARLAU</p>
         </div>
-
-        <div class="meta-card client-card">
-          <label>
-            <span>CLIENT :</span>
-            <input id="clientName" type="text" value="GENYOZ INFO" placeholder="Nom du client" autocomplete="organization" />
-          </label>
-          <label>
-            <span>ICE :</span>
-            <input id="clientIce" type="text" value="003675015000066" inputmode="numeric" placeholder="ICE du client" />
-          </label>
+        <div class="toolbar-actions">
+          <button id="newInvoiceBtn" class="btn btn-secondary" type="button">
+            Nouvelle facture
+          </button>
+          <button id="addRowBtn" class="btn btn-secondary" type="button">
+            Ajouter une ligne
+          </button>
+          <button id="printBtn" class="btn btn-primary" type="button">
+            Télécharger PDF
+          </button>
         </div>
-      </section>
+      </header>
 
-      <h2 class="invoice-title">FACTURE</h2>
+      <main id="invoice" class="invoice-page" aria-label="Facture">
+        <section class="company-header">
+          <div class="logo-text">YES LINK SARLAU</div>
+        </section>
 
-      <section class="table-wrap">
-        <table class="invoice-table">
-          <thead>
-            <tr>
-              <th class="ref-col">RÉFÉRENCE</th>
-              <th>DÉSIGNATION</th>
-              <th class="qty-col">QTÉ</th>
-              <th class="price-col">PRIX U.</th>
-              <th class="amount-col">MONTANT HT</th>
-              <th class="actions-col no-print" aria-label="Actions"></th>
-            </tr>
-          </thead>
-          <tbody id="itemsBody"></tbody>
-        </table>
-      </section>
+        <section class="invoice-meta">
+          <div class="meta-card">
+            <label>
+              <span>NUMÉRO :</span>
+              <input
+                id="invoiceNumber"
+                type="text"
+                placeholder="Ex. FAC-2026-001"
+                autocomplete="off"
+              />
+            </label>
+            <label>
+              <span>DATE :</span>
+              <input id="invoiceDate" type="date" />
+            </label>
+          </div>
 
-      <section class="totals-area">
-        <div class="totals-spacer"></div>
-        <div class="totals-box">
-          <div><span>TOTAL HT</span><strong id="totalHt">0,00 DH</strong></div>
-          <div><span>TVA 20 %</span><strong id="totalTva">0,00 DH</strong></div>
-          <div class="grand-total"><span>TOTAL TTC</span><strong id="totalTtc">0,00 DH</strong></div>
-        </div>
-      </section>
+          <div class="meta-card client-card">
+            <label>
+              <span>CLIENT :</span>
+              <input
+                id="clientName"
+                type="text"
+                value="GENYOZ INFO"
+                placeholder="Nom du client"
+                autocomplete="organization"
+              />
+            </label>
+            <label>
+              <span>ICE :</span>
+              <input
+                id="clientIce"
+                type="text"
+                value="003675015000066"
+                inputmode="numeric"
+                placeholder="ICE du client"
+              />
+            </label>
+          </div>
+        </section>
 
-      <section class="amount-in-words">
-        <p>ARRÊTÉE LA PRÉSENTE FACTURE À LA SOMME DE :</p>
-        <strong id="amountWords">ZÉRO DIRHAM TTC</strong>
-      </section>
+        <h2 class="invoice-title">FACTURE</h2>
 
-      <section class="payment-mode">
-        <strong>MODE DE RÈGLEMENT : ESPÈCES</strong>
-      </section>
+        <section class="table-wrap">
+          <table class="invoice-table">
+            <thead>
+              <tr>
+                <th class="ref-col">RÉFÉRENCE</th>
+                <th>DÉSIGNATION</th>
+                <th class="qty-col">QTÉ</th>
+                <th class="price-col">PRIX U.</th>
+                <th class="amount-col">MONTANT HT</th>
+                <th class="actions-col no-print" aria-label="Actions"></th>
+              </tr>
+            </thead>
+            <tbody id="itemsBody"></tbody>
+          </table>
+        </section>
 
-      <footer class="company-footer">
-        <div>SARL; AU CAPITAL DE : 100 000,00 DHS ;</div>
-        <div>ANGLE BD LALLA YACOUT ET RUE EL AARAAR</div>
-        <div>IMM 9 RASIDENCE GALIS; ETAGE 4 N°17, CASABLANCA</div>
-        <div>TP: 33300329; RC: 441083; IF: 37634765; CNSS: 1660666; ICE: 002315869000065</div>
-      </footer>
-    </main>
+        <section class="totals-area">
+          <div class="totals-spacer"></div>
+          <div class="totals-box">
+            <div>
+              <span>TOTAL HT</span><strong id="totalHt">0,00 DH</strong>
+            </div>
+            <div>
+              <span>TVA 20 %</span><strong id="totalTva">0,00 DH</strong>
+            </div>
+            <div class="grand-total">
+              <span>TOTAL TTC</span><strong id="totalTtc">0,00 DH</strong>
+            </div>
+          </div>
+        </section>
 
-    <p class="print-help no-print">Le bouton PDF ouvre la fenêtre d’impression du navigateur. Choisissez « Enregistrer au format PDF ».</p>
-  </div>
+        <section class="amount-in-words">
+          <p>ARRÊTÉE LA PRÉSENTE FACTURE À LA SOMME DE :</p>
+          <strong id="amountWords">ZÉRO DIRHAM TTC</strong>
+        </section>
 
-  <template id="itemRowTemplate">
-    <tr>
-      <td><input class="item-ref" type="text" placeholder="Référence" /></td>
-      <td><input class="item-name" type="text" placeholder="Désignation" /></td>
-      <td><input class="item-qty numeric" type="number" min="0" step="1" value="1" /></td>
-      <td><input class="item-price numeric" type="number" min="0" step="0.01" value="0" /></td>
-      <td><output class="item-total">0,00 DH</output></td>
-      <td class="no-print"><button class="delete-row" type="button" title="Supprimer cette ligne" aria-label="Supprimer cette ligne">×</button></td>
-    </tr>
-  </template>
+        <section class="payment-mode">
+          <strong>MODE DE RÈGLEMENT : ESPÈCES</strong>
+        </section>
 
-  <script src="app.js" defer></script>
-</body>
+        <footer class="company-footer">
+          <div>SARL; AU CAPITAL DE : 100 000,00 DHS ;</div>
+          <div>ANGLE BD LALLA YACOUT ET RUE EL AARAAR</div>
+          <div>IMM 9 RASIDENCE GALIS; ETAGE 4 N°17, CASABLANCA</div>
+          <div>
+            TP: 33300329; RC: 441083; IF: 37634765; CNSS: 1660666; ICE:
+            002315869000065
+          </div>
+        </footer>
+      </main>
+
+      <p class="print-help no-print">
+        Le PDF est téléchargé directement au format A4.
+      </p>
+    </div>
+
+    <template id="itemRowTemplate">
+      <tr>
+        <td><input class="item-ref" type="text" placeholder="Référence" /></td>
+        <td>
+          <input class="item-name" type="text" placeholder="Désignation" />
+        </td>
+        <td>
+          <input
+            class="item-qty numeric"
+            type="number"
+            min="0"
+            step="1"
+            value="1"
+          />
+        </td>
+        <td>
+          <input
+            class="item-price numeric"
+            type="number"
+            min="0"
+            step="0.01"
+            value="0"
+          />
+        </td>
+        <td><output class="item-total">0,00 DH</output></td>
+        <td class="no-print">
+          <button
+            class="delete-row"
+            type="button"
+            title="Supprimer cette ligne"
+            aria-label="Supprimer cette ligne"
+          >
+            ×
+          </button>
+        </td>
+      </tr>
+    </template>
+
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"
+      defer
+    ></script>
+    <script src="app.js" defer></script>
+  </body>
 </html>
